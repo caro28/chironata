@@ -1,10 +1,8 @@
 '''
-This file extracts source texts (Latin or Ancient Greek texts) stored in json files, obtained 
-from Perseus, then writes one text file and json file per source document.
+This file extracts source texts (Latin or Ancient Greek texts) stored in JSONL, obtained 
+from Perseus, then writes one text file and one metadata file per source document.
 
-Each input json file (from Perseus) contains the following:
-- rows: organized by source text; thus each row contains all data for one source text
-- columns:
+Assumes the following keps per json object:
     id (str): CTS URN
     text (str): full text, with a single newline separating Perseus sections
     locs (list of dicts): metadata per Perseus section 
@@ -12,10 +10,10 @@ Each input json file (from Perseus) contains the following:
                    "start" (starting character index)
                    "length"
 
-The output files contain the following:
-.txt file: full source text as a continuous string, with newline separator 
-replaced with one whitespace
-.json file: metadata per source text (from "locs" column)
+Output files:
+    .txt: full source text as a continuous string, with newline separator 
+                replaced with one whitespace
+    .json: metadata per source text (from "locs" column)
 '''
 
 import os
@@ -50,7 +48,7 @@ def main():
                     d.write(row['text'].replace('\n', ' '))
                 with open(os.path.join(out_path, f"{row['id'].rsplit('.',1)[0]}.json"), "w") as m:
                     m.write(json.dumps(row['locs']))
-        break
+
 
 if __name__ == "__main__":
     main()
