@@ -5,4 +5,13 @@ The homepage of this repository adapts this pipeline to run on directories of so
 
 ## Pipeline files
 * runner.py
-* 
+** book-stream.py
+* clean_par.py
+* segment_sents.py
+* overlap.py
+* run_vecalign_on_dir.py
+
+## Evaluation files
+* score_all.py
+
+## 
