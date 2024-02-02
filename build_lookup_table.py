@@ -5,7 +5,7 @@ dict to JSON.
 
 The output .json has this structure:
     keys: CTS URN, e.g. "urn:cts:greekLit:tlg0001.tlg001"
-    values: filenames (basename) of corresponding translations, e.g. [
+    values: filenames of corresponding translations, e.g. [
         'apollonius_1889',
         'tlg0001.tlg001.opp-eng1.xml',
         'apolloniusRhodius_1_1791',

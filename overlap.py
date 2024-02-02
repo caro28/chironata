@@ -56,7 +56,7 @@ def _main():
     #    num_overlaps=args.num_overlaps,
     #    input_files=args.inputs)
     
-    ## modified for Chiron ##
+    ## modified for use in runner.py file ##
     inputs = [sys.argv[1]]
     print(inputs)
     num_overlaps = 10

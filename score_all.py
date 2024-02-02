@@ -31,6 +31,12 @@ Faster implementation of lax and strict precision and recall, based on
 
 """
 
+'''
+This file was modified by Chiron to include two new scoring measures:
+New strict score: see function _new_strict()
+New lax score: see function _new_lax()
+'''
+
 
 def _precision(goldalign, testalign):
     """
@@ -81,7 +87,7 @@ def _precision(goldalign, testalign):
 
 def _new_strict(goldalign, testalign):
     """
-    New scoring function: strict match at chunk level, after merging predicted alignments
+    Chiron new scoring function: strict match at chunk level, after merging predicted alignments
     """
     tpstrict = 0  # true positive strict counter
     tplax = 0     # true positive lax counter
@@ -148,9 +154,6 @@ def _new_strict(goldalign, testalign):
                 goldaligns_missed.append((set(gold_src), set(gold_target)))
                 supersets_notmatch.append(reconstructed_test)
     
-    # print(f'tpstrict is {tpstrict}, fpstrict is {fpstrict}, tplax is {tplax}, fplax is {fplax}, fnlax is {fnlax}, fnstrict is {fnstrict}')
-    # return np.array([tpstrict, fpstrict, tplax, fplax, fnlax, fnstrict], dtype=np.int32)
-
     # return supersets_match for debugging, when running unittests
     print(f"missed goldaligns are {goldaligns_missed}")
     print(f"supersets without matches are: {supersets_notmatch}")
@@ -158,7 +161,7 @@ def _new_strict(goldalign, testalign):
 
 def _new_lax(goldalign, testalign):
     """
-    New lax scoring: number of overlapping sentences at chunk level, after merging predicted alignments
+    Chiron new lax scoring: number of overlapping sentences at chunk level, after merging predicted alignments
     """
     tpstrict = 0  # true positive strict counter
     tplax = 0     # true positive lax counter
@@ -278,39 +281,21 @@ def score_multiple(gold_list, test_list, value_for_div_by_0=0.0):
         gold_no_del = [(x, y) for x, y in goldalign if len(x) and len(y)]
         rcounts += _precision(goldalign=test_no_del, testalign=gold_no_del)
 
-    # Compute results
-    # pcounts: tpstrict,fnstrict,tplax,fnlax
-    # rcounts: tpstrict,fpstrict,tplax,fplax
-
+    #### modified for Chiron ######
     if pcounts[0] + pcounts[1] == 0:
         pstrict = value_for_div_by_0
     else:
         pstrict = pcounts[0] / float(pcounts[0] + pcounts[1])
-
-    # if pcounts[2] + pcounts[3] == 0:
-    #     plax = value_for_div_by_0
-    # else:
-    #     plax = pcounts[2] / float(pcounts[2] + pcounts[3])
 
     if rcounts[0] + rcounts[1] == 0:
         rstrict = value_for_div_by_0
     else:
         rstrict = rcounts[0] / float(rcounts[0] + rcounts[1])
 
-    # if rcounts[2] + rcounts[3] == 0:
-    #     rlax = value_for_div_by_0
-    # else:
-    #     rlax = rcounts[2] / float(rcounts[2] + rcounts[3])
-
     if (pstrict + rstrict) == 0:
         fstrict = value_for_div_by_0
     else:
         fstrict = 2 * (pstrict * rstrict) / (pstrict + rstrict)
-
-    # if (plax + rlax) == 0:
-    #     flax = value_for_div_by_0
-    # else:
-    #     flax = 2 * (plax * rlax) / (plax + rlax)
     
     ############ new scores added below ####################
     # new strict score

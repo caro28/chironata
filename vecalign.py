@@ -37,7 +37,7 @@ from vecalign_dp_utils import make_alignment_types, print_alignments, read_align
 # to use vecalign's scoring
 # from score import score_multiple, log_final_scores
 
-# to use our new scoring
+# to use Chiron's new scoring
 from score_all import score_multiple, log_final_scores
 
 ## modified for chiron from print_alignments to write to file instead ##
@@ -147,7 +147,6 @@ def _main():
         tgt_prefix = os.path.splitext(os.path.basename(sys.argv[6]))[0]
         src_prefix = os.path.splitext(os.path.basename(sys.argv[4]))[0]
         filename_ = f"/home/craig.car/repos/chiron/chironata/data/alignments_rslts/{src_prefix}_{tgt_prefix}"
-        print(filename_)
         write_alignments(stack[0]['final_alignments'], stack[0]['alignment_scores'], filename_+".rslts")
 
         test_alignments.append(stack[0]['final_alignments'])

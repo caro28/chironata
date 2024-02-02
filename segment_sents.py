@@ -2,9 +2,7 @@
 
 import os, sys
 import stanza
-
 import pandas as pd
-
 from itertools import chain
 
 from functions import (
