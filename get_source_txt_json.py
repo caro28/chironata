@@ -19,7 +19,6 @@ replaced with one whitespace
 '''
 
 import os
-import sys
 import glob
 import json
 import argparse
@@ -39,6 +38,7 @@ def main():
     
     # inside chironata repo, perseus_jsons_path is: data/perseus_jsons
     perseus_jsons_path = args.i
+    # currently, these output files are saved in: data/source_sents
     out_path = args.o
     for filepath in glob.iglob(f"{perseus_jsons_path}/*.json"):
         print(f"Processing file: {filepath}")
@@ -49,6 +49,7 @@ def main():
                     d.write(row['text'].replace('\n', ' '))
                 with open(os.path.join(out_path, f"{row['id'].rsplit('.',1)[0]}.json"), "w") as m:
                     m.write(json.dumps(row['locs']))
+        break
 
 if __name__ == "__main__":
     main()
