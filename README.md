@@ -40,6 +40,7 @@ Output:
 ## Run Vecalign on embedded texts
 run_vecalign_on_dir.py
 * Calls Vecalign's algorithm, using vecalign.py, on an input directory.
+* Filters for files ending in .emb and assumes these are embeddings of overlaps files, or the final output of runner.py.
 
 Required files:
 * cts_lookup_table.json: map of CTS URN to available translations
