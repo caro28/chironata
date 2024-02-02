@@ -3,6 +3,12 @@ import subprocess
 import json
 import sys
 
+'''
+TODO: Edit slurm command, as needed. This file is set up to use a slurm 
+command, defined below, to run on the Discovery Cluster. This command also 
+specifies a conda environment.
+'''
+
 params = {
     'QUEUE':'short',
     'SWORKERS':2,

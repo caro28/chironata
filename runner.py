@@ -32,6 +32,11 @@ import argparse
 import subprocess
 from tqdm import tqdm
 
+'''
+TODO: Edit slurm command, as needed. This file is set up to use three slurm 
+commands, defined below, to run on the Discovery Cluster. These commands also 
+specify a conda environment.
+'''
 
 params = {
     'QUEUE':'short',
@@ -39,6 +44,7 @@ params = {
     'SMEM':10
 }
 
+# slurm commands
 lxml_cpu = 'srun --time 1-0 --partition=short --nodes=1 --pty --mem=4G --time=00:30:00 /bin/bash -c "source /home/craig.car/miniconda3/bin/activate; conda activate use_lxml; {command};"'
 labse_vec_cpu = 'srun --partition=short --nodes=1 --pty --mem=4GB --time=01:00:00 /bin/bash -c "source /home/craig.car/miniconda3/bin/activate; conda activate labse_vec_pipeline; {command};"'
 labse_vec_gpu = 'srun --partition=gpu --nodes=1 --pty --gres=gpu:v100-sxm2 --ntasks=1 --mem=4GB --time=01:00:00 /bin/bash -c "source /home/craig.car/miniconda3/bin/activate; conda activate labse_vec_pipeline; {command};"'
