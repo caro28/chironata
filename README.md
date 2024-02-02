@@ -13,7 +13,7 @@ Note: source (Latin or Ancient Greek) texts skip the first step below. They ente
 
 1. Extract _translations_ from XML files, suppressing paratext, then post-process the output
 * book-stream.py: Extract from XML, write to .par
-* clean_par.py: Reconstitute paragraphs split by paratext, write to .txt
+* clean_par.py: Filter out additional paratext by checking language (with Spacy), reconstitute paragraphs split by paratext, and write to .txt
 
 2. Segment into sentences
 * segment_sents.py: Segment using Stanza (if lang supported), then split further on periods, colons, semi-colons, and write to .sents
@@ -35,12 +35,12 @@ This file assumes that each JSON oject has the following keys:
 
 Output: 
 * .txt file: full text as continuous string
-* .json file: metadata (all locts per text)
+* .json file: metadata (all locs per text)
 
 ## Run Vecalign on embedded texts
 run_vecalign_on_dir.py
 * Calls Vecalign's algorithm, using vecalign.py, on an input directory.
-* Filters for files ending in .emb and assumes these are embeddings of overlaps files, or the final output of runner.py.
+* Filters for files ending in .emb and assumes these are embeddings of overlaps files (the final output of runner.py)
 
 Required files:
 * cts_lookup_table.json: map of CTS URN to available translations
@@ -48,11 +48,29 @@ Required files:
    * Required input: translations_repositories.csv (currently in data/)
 
 ## Other convenience files
-* run_labse_on_dir.py: to run LaBSE on a directory of .sents files (and embed each sentence)
+* run_labse_on_dir.py: to run LaBSE on a directory of .sents files (and embed by sentence rather than overlap)
 
 # Evaluation (with ground-truth sentence alignments)
-* score_all.py
+score_all.py
+* Vecalign's original strict scoring function
+* Chiron's new strict scoring function
+* Chiron's new lax scoring function
 
 # Results
 * Vecalign's raw output: results/alignment_rslts/
 * Sentence-aligned texts: results/sentence_aligned_texts
+
+# Pipeline models
+1. LaBSE, Feng et al. (2020)
+* For embedding sentences, using [Hugging Face implementation](https://huggingface.co/sentence-transformers/LaBSE)
+* LaBSE [paper](https://arxiv.org/abs/2007.01852): Feng, F., Yang, Y., Cer, D.M., Arivazhagan, N., & Wang, W. (2020). Language-agnostic BERT Sentence Embedding. *Annual Meeting of the Association for Computational Linguistics.*
+
+2. Vecalign, Thompson (2019)
+* For aligning two texts embedded at the sentence level
+* Vecalign GitHub: https://github.com/thompsonb/vecalign
+* Vecalign [paper](https://aclanthology.org/D19-1136/): Thompson, B. (2019). Vecalign: Improved Sentence Alignment in Linear Time and Space. *Conference on Empirical Methods in Natural Language Processing.*
+
+
+# Installation
+1. To use LaBSE, see instructions on [Hugging Face](https://huggingface.co/sentence-transformers/LaBSE#usage-sentence-transformers)
+2. To use Vecalign, see list of dependencies on [Vecalign's GitHub](https://github.com/thompsonb/vecalign#build-vecalign)
