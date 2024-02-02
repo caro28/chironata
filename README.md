@@ -22,14 +22,16 @@ This file performs the following steps by calling other python files in this rep
 4. Embed "overlaps" with LaBSE
 * run_labse.py: Embed each line in .overlaps file, write to .emb (binary file)
 
-### Note: Extracting source texts (Latin or Ancient Greek)
-Texts and metadata downloaded using Perseus's API and saved in JSONL files can be processed with get_source_txt_json.py
+### Note: Extracting source texts (Latin or Ancient Greek): get_source_txt_json.py
+Texts and metadata downloaded using Perseus's API and saved in JSONL files must be processed separately, using get_source_txt_json.py.
 
-get_source_txt_json.py assumes that each JSON oject has the following keys:
+This file assumes that each JSON oject has the following keys:
 * id (str): CTS URN
 * text (str): full text, with a single newline separating Perseus sections
 * locs (list of dicts): metadata per Perseus section
     * locs keys: "loc", "start" (starting character index), "length"
+
+
 
 ## Run Vecalign on embedded texts
 * run_vecalign_on_dir.py
