@@ -74,5 +74,5 @@ score_all.py
 # Installation
 1. To use LaBSE, see instructions on [Hugging Face](https://huggingface.co/sentence-transformers/LaBSE#usage-sentence-transformers)
 2. To use Vecalign, see list of dependencies on [Vecalign's GitHub](https://github.com/thompsonb/vecalign#build-vecalign)
-3. For sentence segmentation with Stanza, see their [documentation]([url](https://stanfordnlp.github.io/stanza/tokenize.html))
-4. For language detection with Spacy, see this implementation [using FastText and Spacy]([url](https://spacy.io/universe/project/spacy_fastlang)https://spacy.io/universe/project/spacy_fastlang)
+3. For sentence segmentation with Stanza, see their [documentation]((https://stanfordnlp.github.io/stanza/tokenize.html))
+4. For language detection with Spacy, see this implementation [using FastText and Spacy](https://spacy.io/universe/project/spacy_fastlang)
