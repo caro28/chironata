@@ -26,7 +26,8 @@ import pandas as pd
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Extract text and metadata from David's Perseus json files.")
+    parser = argparse.ArgumentParser(
+        description="Extract text and metadata from David's Perseus json files.")
 
     parser.add_argument("-i", type=str, required=True,
                         help="Path to directory with input json files")
