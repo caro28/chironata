@@ -9,6 +9,8 @@ Data processing pipeline: runner.py
 
 This file performs the following steps by calling other python files in this repository, listed below.
 
+Note: source (Latin or Ancient Greek) texts skip the first step below. They enter the data processing pipeline at "2. Segment into sentences."
+
 1. Extract _translations_ from XML files, suppressing paratext, then post-process the output
 * book-stream.py: Extract from XML, write to .par
 * clean_par.py: Reconstitute paragraphs split by paratext, write to .txt
@@ -31,17 +33,25 @@ This file assumes that each JSON oject has the following keys:
 * locs (list of dicts): metadata per Perseus section
     * locs keys: "loc", "start" (starting character index), "length"
 
-
+Output: 
+* .txt file: full text as continuous string
+* .json file: metadata (all locts per text)
 
 ## Run Vecalign on embedded texts
-* run_vecalign_on_dir.py
+run_vecalign_on_dir.py
+* Calls Vecalign's algorithm, using vecalign.py, on an input directory.
 
-## Other files
-* 
-* build_lookup_table.py
-* run_labse_on_dir.py
+Required files:
+* cts_lookup_table.json: map of CTS URN to available translations
+   * To build this table, run: build_lookup_table.py
+   * Required input: translations_repositories.csv (currently in data/)
+
+## Other convenience files
+* run_labse_on_dir.py: to run LaBSE on a directory of .sents files (and embed each sentence)
 
 # Evaluation (with ground-truth sentence alignments)
 * score_all.py
 
 # Results
+* Vecalign's raw output: results/alignment_rslts/
+* Sentence-aligned texts: results/sentence_aligned_texts
