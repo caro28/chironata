@@ -1,10 +1,8 @@
 # Chironata
-Chironata is a large, multilingual dataset, aligned at the sentence level.
+This repository presents an attempt to build Chironata, a large, multilingual dataset, aligned at the sentence level, using a neural pipeline. The latter is presented in this [paper](https://ceur-ws.org/Vol-3558/paper6193.pdf) and [repository](https://github.com/caro28/chiron) and consists of a sentence embedding model (LaBSE) and a sentence alignment model (Vecalign).
 
-## Chiron
-This dataset was built using a pipeline, [Chiron](https://github.com/caro28/chiron/), which consists of an embedding model (LaBSE) and a sentence alignment model (Vecalign).
+The homepage of this repository adapts this pipeline to run on directories of source texts and their translations.
 
-Chiron is adapted here to run at scale, on directories of source and target documents.
-
-## Pipeline: runner.py
-
+## Pipeline files
+* runner.py
+* 
