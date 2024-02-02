@@ -7,47 +7,29 @@ The homepage of this repository adapts this pipeline to run on directories of so
 ## Extract and transform texts
 Data processing pipeline: runner.py
 
-This file performs the following steps:
-1. Extract _translations_ from XML files and post-process them (see note below on extracting texts from Perseus)
-* book-stream.py
- * Input: xml file from Open Greek and Latin Project
- * Extracts from XML, suppressing paratext where possible
- * Writes output to .par
-* clean_par.py
- * Input: .par file
- * Reconstitutes paragraphs split by paratext
- * Writes to output to .txt
+This file performs the following steps by calling other python files in this repository, listed below.
 
-2. Segments into sentences
-* segment_sents.py
- * Input: .txt
- * Segments supported languages using Stanza, then splits further on periods, colons, semi-colons
- * Writes output to .sents
+1. Extract _translations_ from XML files, suppressing paratext, then post-process the output
+* book-stream.py: Extract from XML, write to .par
+* clean_par.py: Reconstitute paragraphs split by paratext, write to .txt
 
-3. Builds "overlaps" files required by Vecalign
-* overlap.py
- * Input: .sents
- * Builds concatenations of up to 10 consecutive sentences
- * Writes output to .overlaps
+2. Segment into sentences
+* segment_sents.py: Segment using Stanza (if lang supported), then split further on periods, colons, semi-colons, and write to .sents
 
-4. Embeds "overlaps" with LaBSE
-* run_labse.py
- * Input: .overlaps
- * Embeds each line in .overlaps file
- * Writes output to binary file, .emb
+3. Build "overlaps" files required by Vecalign
+* overlap.py: Build concatenations of up to 10 consecutive sentences, write to .overlaps
 
-### Extracting source texts (Latin or Ancient Greek) from Perseus
-Texts and metadata downloaded using Perseus's API and saved in JSON files can be processed with get_source_txt_json.py
+4. Embed "overlaps" with LaBSE
+* run_labse.py: Embed each line in .overlaps file, write to .emb (binary file)
 
-This file assumes that each JSON oject has the following structure:
-- rows: organized by source text; thus each row contains all data for one source text
-- columns:
-    id (str): CTS URN
-    text (str): full text, with a single newline separating Perseus sections
-    locs (list of dicts): metadata per Perseus section 
-        dict keys: "loc"
-                   "start" (starting character index)
-                   "length"
+### Note: Extracting source texts (Latin or Ancient Greek)
+Texts and metadata downloaded using Perseus's API and saved in JSONL files can be processed with get_source_txt_json.py
+
+get_source_txt_json.py assumes that each JSON oject has the following keys:
+* id (str): CTS URN
+* text (str): full text, with a single newline separating Perseus sections
+* locs (list of dicts): metadata per Perseus section
+    * locs keys: "loc", "start" (starting character index), "length"
 
 ## Run Vecalign on embedded texts
 * run_vecalign_on_dir.py
